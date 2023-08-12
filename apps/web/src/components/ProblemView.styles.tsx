@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Stack } from "@mui/material";
 
 export const Root = styled.div`
     margin: 0;
@@ -11,10 +10,19 @@ export const Header = styled.div`
 `;
 
 export const Body = styled.div`
-    margin: ${({ theme }) => theme.spacing(0, 0, 8)};
+    margin: ${({ theme }) => theme.spacing(0, 0, 4)};
 `;
 
-export const ExampleContainer = styled(Stack)``;
+export const Constraints = styled.div``;
+
+export const ConstraintList = styled.ul`
+    margin: 0 1rem 0;
+    padding: 0;
+
+    li:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+    }
+`;
 
 export const Example = styled.pre`
     margin: ${({ theme }) => theme.spacing(1, 0, 0)};

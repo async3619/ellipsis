@@ -27,6 +27,7 @@ const MOCK_PROBLEM: Problem = {
         { input: "bbbbb", output: "1", explanation: "The answer is 'b', with the length of 1." },
         { input: "pwwkew", output: "3", explanation: "The answer is 'wke', with the length of 3." },
     ],
+    constraints: ["`0 <= s.length <= 5 * 104`", "`s` consists of English letters, digits, symbols and spaces."],
 };
 
 export default function Home() {

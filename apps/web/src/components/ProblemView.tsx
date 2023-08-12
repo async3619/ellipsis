@@ -2,9 +2,9 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
 
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
-import { Body, Code, Example, ExampleContainer, Header, Root } from "@components/ProblemView.styles";
+import { Body, Code, ConstraintList, Constraints, Example, Header, Root } from "@components/ProblemView.styles";
 
 import { Problem } from "@utils/types";
 
@@ -28,11 +28,11 @@ export function ProblemView({ problem }: ProblemViewProps) {
             <Body>
                 <ReactMarkdown children={problem.description} components={COMPONENT_RENDERERS} />
             </Body>
-            <ExampleContainer spacing={4}>
+            <Stack spacing={4}>
                 {problem.testCases.map((testCase, index) => {
                     return (
                         <div key={+index}>
-                            <Typography fontSize="1rem" fontWeight={600}>
+                            <Typography fontSize="0.9rem" fontWeight={600}>
                                 Example {index}:
                             </Typography>
                             <Example>
@@ -45,7 +45,19 @@ export function ProblemView({ problem }: ProblemViewProps) {
                         </div>
                     );
                 })}
-            </ExampleContainer>
+                <Constraints>
+                    <Typography fontSize="0.9rem" fontWeight={600} sx={{ mb: 1 }}>
+                        Constraints:
+                    </Typography>
+                    <ConstraintList>
+                        {problem.constraints.map((constraint, index) => (
+                            <li key={+index}>
+                                <ReactMarkdown children={constraint} components={COMPONENT_RENDERERS} />
+                            </li>
+                        ))}
+                    </ConstraintList>
+                </Constraints>
+            </Stack>
         </Root>
     );
 }
