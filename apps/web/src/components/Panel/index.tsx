@@ -1,17 +1,14 @@
 import React from "react";
+import { PanelProps } from "react-resizable-panels";
 
-import { Paper } from "@mui/material";
+import { Content, Root } from "@components/Panel/index.styles";
 
-import { Root } from "@components/Panel/index.styles";
-
-export interface PanelProps {}
-
-export function Panel({ children }: React.PropsWithChildren<PanelProps>) {
+export function Panel({ children, ...rest }: React.PropsWithChildren<PanelProps>) {
     return (
-        <Root>
-            <Paper elevation={0} sx={{ height: "100%" }}>
+        <Root {...rest}>
+            <Content elevation={0} sx={{ height: "100%" }}>
                 {children}
-            </Paper>
+            </Content>
         </Root>
     );
 }
