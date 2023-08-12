@@ -14,4 +14,23 @@ export const theme = createTheme({
     typography: {
         fontFamily: [pretendard.style.fontFamily, "sans-serif"].join(", "),
     },
+    components: {
+        MuiPaper: {
+            defaultProps: {
+                elevation: 0,
+            },
+        },
+        MuiAppBar: {
+            defaultProps: {
+                elevation: 0,
+            },
+        },
+        MuiButton: {
+            defaultProps: {
+                variant: "contained",
+                disableElevation: true,
+                disableRipple: true,
+            },
+        },
+    },
 });

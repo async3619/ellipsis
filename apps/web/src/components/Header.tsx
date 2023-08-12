@@ -15,7 +15,7 @@ export function Header({ fullScreen }: HeaderProps) {
     );
 
     return (
-        <AppBar elevation={0} position="static" sx={{ background: "#fff" }}>
+        <AppBar position="static" sx={{ background: "#fff" }}>
             <Root>
                 <Container maxWidth={fullScreen ? false : undefined}>{content}</Container>
             </Root>

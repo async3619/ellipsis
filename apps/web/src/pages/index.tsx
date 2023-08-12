@@ -1,15 +1,17 @@
 import React from "react";
-import { Box } from "@mui/material";
 
+import { Box } from "@mui/material";
 import Editor from "@monaco-editor/react";
 
 import { Panel } from "@components/Panel";
 import { PanelLayout } from "@components/Panel/Layout";
 import { PanelHandle } from "@components/Panel/Handle";
-import { ProblemView } from "@components/ProblemView";
+import { ProblemView } from "@components/Problem/View";
+import { ProblemToolbar } from "@components/Problem/Toolbar";
+import { FillContent } from "@components/FillContent";
 
 import { installRouteMiddleware } from "@utils/routes/middleware";
-import { Problem } from "@utils/types";
+import { MOCK_PROBLEM } from "@constants/problems";
 
 const options: React.ComponentProps<typeof Editor>["options"] = {
     wordWrap: "on",
@@ -19,18 +21,24 @@ const options: React.ComponentProps<typeof Editor>["options"] = {
     },
 };
 
-const MOCK_PROBLEM: Problem = {
-    title: "3. Longest Substring Without Repeating Characters",
-    description: "Given a string `s`, find the length of the **longest substring** without repeating characters.",
-    testCases: [
-        { input: "abcabcbb", output: "3", explanation: "The answer is 'abc', with the length of 3." },
-        { input: "bbbbb", output: "1", explanation: "The answer is 'b', with the length of 1." },
-        { input: "pwwkew", output: "3", explanation: "The answer is 'wke', with the length of 3." },
-    ],
-    constraints: ["`0 <= s.length <= 5 * 104`", "`s` consists of English letters, digits, symbols and spaces."],
-};
-
 export default function Home() {
+    const [sourceCode, setSourceCode] = React.useState("");
+
+    const handleChange = React.useCallback((value: string) => {
+        setSourceCode(value);
+    }, []);
+
+    const handleClear = React.useCallback(() => {
+        setSourceCode(MOCK_PROBLEM.initialCode.typescript || "");
+    }, []);
+
+    React.useEffect(() => {
+        handleClear();
+    }, [handleClear]);
+
+    const handleTest = React.useCallback(() => {}, []);
+    const handleSubmit = React.useCallback(() => {}, []);
+
     return (
         <Box height="100%" p={1}>
             <PanelLayout>
@@ -38,8 +46,18 @@ export default function Home() {
                     <ProblemView problem={MOCK_PROBLEM} />
                 </Panel>
                 <PanelHandle />
-                <Panel minSize={40}>
-                    <Editor defaultLanguage="typescript" options={options} />
+                <Panel withoutPaper minSize={40}>
+                    <Box height="100%" display="flex" flexDirection="column">
+                        <FillContent mb={1} flex="1 1 auto">
+                            <Editor
+                                defaultLanguage="typescript"
+                                options={options}
+                                onChange={handleChange}
+                                value={sourceCode}
+                            />
+                        </FillContent>
+                        <ProblemToolbar onClear={handleClear} onSubmit={handleSubmit} onTest={handleTest} />
+                    </Box>
                 </Panel>
             </PanelLayout>
         </Box>

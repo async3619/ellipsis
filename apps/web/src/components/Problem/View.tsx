@@ -4,7 +4,7 @@ import ReactMarkdown, { Components } from "react-markdown";
 
 import { Stack, Typography } from "@mui/material";
 
-import { Body, Code, ConstraintList, Constraints, Example, Header, Root } from "@components/ProblemView.styles";
+import { Body, Code, ConstraintList, Constraints, Example, Header, Root } from "@components/Problem/View.styles";
 
 import { Problem } from "@utils/types";
 

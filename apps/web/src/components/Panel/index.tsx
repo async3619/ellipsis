@@ -3,12 +3,15 @@ import { PanelProps } from "react-resizable-panels";
 
 import { Content, Root } from "@components/Panel/index.styles";
 
-export function Panel({ children, ...rest }: React.PropsWithChildren<PanelProps>) {
+interface Props extends PanelProps {
+    withoutPaper?: boolean;
+}
+
+export function Panel({ children, withoutPaper, ...rest }: React.PropsWithChildren<Props>) {
     return (
         <Root {...rest}>
-            <Content elevation={0} sx={{ height: "100%" }}>
-                {children}
-            </Content>
+            {!withoutPaper && <Content sx={{ height: "100%" }}>{children}</Content>}
+            {withoutPaper && children}
         </Root>
     );
 }
