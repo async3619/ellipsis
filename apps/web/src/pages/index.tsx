@@ -13,6 +13,7 @@ import { Problem } from "@utils/types";
 
 const options: React.ComponentProps<typeof Editor>["options"] = {
     wordWrap: "on",
+    scrollBeyondLastLine: false,
     minimap: {
         enabled: false,
     },
