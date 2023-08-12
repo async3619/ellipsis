@@ -9,7 +9,7 @@ import { PageProps } from "@utils/routes/types";
 export default function App({ Component, pageProps }: AppProps<PageProps>) {
     return (
         <ThemeProvider theme={theme}>
-            <Layout fullWidth={pageProps.fullWidth}>
+            <Layout fullScreen={pageProps.fullScreen}>
                 <Component {...pageProps} />
             </Layout>
         </ThemeProvider>

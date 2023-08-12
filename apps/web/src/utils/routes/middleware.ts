@@ -7,7 +7,7 @@ interface RouteMiddlewareClientOptions {}
 
 interface RouteMiddlewareOptions {
     title?: string;
-    fullWidth?: boolean;
+    fullScreen?: boolean;
 }
 
 export type RouteMiddlewareClient<
@@ -20,9 +20,9 @@ export type RouteMiddlewareClient<
 ) => Promise<GetServerSidePropsResult<T>>;
 
 export function installRouteMiddleware<T extends PageProps>(options: RouteMiddlewareOptions = {}) {
-    const { title, fullWidth } = options;
+    const { title, fullScreen } = options;
 
-    return (origin: RouteMiddlewareClient<Omit<T, "title" | "fullWidth"> & PageProps>): GetServerSideProps<T> => {
+    return (origin: RouteMiddlewareClient<Omit<T, "title" | "fullScreen"> & PageProps>): GetServerSideProps<T> => {
         return async context => {
             const data = await origin(context, {});
 
@@ -33,7 +33,7 @@ export function installRouteMiddleware<T extends PageProps>(options: RouteMiddle
                     props: {
                         ...data.props,
                         title: title ?? props.title ?? null,
-                        fullWidth: fullWidth ?? props.fullWidth ?? false,
+                        fullScreen: fullScreen ?? props.fullScreen ?? false,
                     } as T,
                 };
             }

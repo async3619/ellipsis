@@ -1,23 +1,26 @@
 import React from "react";
 
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { Global } from "@emotion/react";
 
 import { Header } from "@components/Header";
 
-import { GlobalStyles } from "@components/Layout.styles";
+import { FullScreenStyles, GlobalStyles, Root } from "@components/Layout.styles";
 
 export interface LayoutProps {
-    fullWidth?: boolean;
+    fullScreen?: boolean;
 }
 
-export default function Layout({ children, fullWidth = false }: React.PropsWithChildren<LayoutProps>) {
+export default function Layout({ children, fullScreen = false }: React.PropsWithChildren<LayoutProps>) {
     return (
-        <div>
+        <Root fullScreen={fullScreen}>
             <CssBaseline />
             <Global styles={GlobalStyles} />
-            <Header fullWidth={fullWidth} />
-            {children}
-        </div>
+            {fullScreen && <Global styles={FullScreenStyles} />}
+            <Header fullScreen={fullScreen} />
+            <Box component="main" flex="1 1 auto">
+                {children}
+            </Box>
+        </Root>
     );
 }

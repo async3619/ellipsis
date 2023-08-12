@@ -4,10 +4,10 @@ import { AppBar, Container } from "@mui/material";
 import { LogoIcon, Root } from "@components/Header.styles";
 
 export interface HeaderProps {
-    fullWidth?: boolean;
+    fullScreen?: boolean;
 }
 
-export function Header({ fullWidth }: HeaderProps) {
+export function Header({ fullScreen }: HeaderProps) {
     const content = (
         <>
             <LogoIcon />
@@ -17,7 +17,7 @@ export function Header({ fullWidth }: HeaderProps) {
     return (
         <AppBar elevation={0} position="static" sx={{ background: "#fff" }}>
             <Root>
-                <Container maxWidth={fullWidth ? false : undefined}>{content}</Container>
+                <Container maxWidth={fullScreen ? false : undefined}>{content}</Container>
             </Root>
         </AppBar>
     );
