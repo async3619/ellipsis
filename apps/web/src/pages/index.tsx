@@ -12,12 +12,21 @@ import { FillContent } from "@components/FillContent";
 
 import { installRouteMiddleware } from "@utils/routes/middleware";
 import { MOCK_PROBLEM } from "@constants/problems";
+import { EditorToolbar } from "@components/Editor/Toolbar";
+import { EditorProvider } from "@components/Editor/Provider";
 
 const options: React.ComponentProps<typeof Editor>["options"] = {
     wordWrap: "on",
     scrollBeyondLastLine: false,
     minimap: {
         enabled: false,
+    },
+    padding: {
+        top: 8,
+        bottom: 8,
+    },
+    scrollbar: {
+        useShadows: false,
     },
 };
 
@@ -32,35 +41,44 @@ export default function Home() {
         setSourceCode("");
     }, []);
 
+    const handleTest = React.useCallback(() => {}, []);
+    const handleSubmit = React.useCallback(() => {}, []);
+
+    const handleLanguageChange = React.useCallback(() => {
+        handleClear();
+    }, [handleClear]);
+
     React.useEffect(() => {
         handleClear();
     }, [handleClear]);
 
-    const handleTest = React.useCallback(() => {}, []);
-    const handleSubmit = React.useCallback(() => {}, []);
-
     return (
-        <Box height="100%" p={1}>
-            <PanelLayout>
-                <Panel minSize={40}>
-                    <ProblemView problem={MOCK_PROBLEM} />
-                </Panel>
-                <PanelHandle />
-                <Panel withoutPaper minSize={40}>
-                    <Box height="100%" display="flex" flexDirection="column">
-                        <FillContent mb={1} flex="1 1 auto">
-                            <Editor
-                                defaultLanguage="typescript"
-                                options={options}
-                                onChange={handleChange}
-                                value={sourceCode}
-                            />
-                        </FillContent>
-                        <ProblemToolbar onClear={handleClear} onSubmit={handleSubmit} onTest={handleTest} />
-                    </Box>
-                </Panel>
-            </PanelLayout>
-        </Box>
+        <EditorProvider onLanguageChange={handleLanguageChange}>
+            {({ language }) => (
+                <Box height="100%" p={1}>
+                    <PanelLayout>
+                        <Panel minSize={40}>
+                            <ProblemView problem={MOCK_PROBLEM} />
+                        </Panel>
+                        <PanelHandle />
+                        <Panel withoutPaper minSize={40}>
+                            <Box height="100%" display="flex" flexDirection="column">
+                                <EditorToolbar />
+                                <FillContent mt={1} mb={1} flex="1 1 auto">
+                                    <Editor
+                                        language={language}
+                                        options={options}
+                                        onChange={handleChange}
+                                        value={sourceCode}
+                                    />
+                                </FillContent>
+                                <ProblemToolbar onClear={handleClear} onSubmit={handleSubmit} onTest={handleTest} />
+                            </Box>
+                        </Panel>
+                    </PanelLayout>
+                </Box>
+            )}
+        </EditorProvider>
     );
 }
 
