@@ -2,9 +2,9 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
 
-import { Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 
-import { Body, Code, ConstraintList, Constraints, Example, Header, Root } from "@components/Problem/View.styles";
+import { Body, Code, Example, Header, Root } from "@components/Problem/View.styles";
 
 import { Problem } from "@utils/types";
 
@@ -13,7 +13,7 @@ export interface ProblemViewProps {
 }
 
 const COMPONENT_RENDERERS: Components = {
-    p: props => <Typography {...props} fontSize="0.95rem" />,
+    p: props => <Typography {...props} fontSize="0.95rem" sx={{ mb: 2 }} />,
     code: props => <Code {...props} />,
 };
 
@@ -26,37 +26,40 @@ export function ProblemView({ problem }: ProblemViewProps) {
                 </Typography>
             </Header>
             <Body>
-                <ReactMarkdown children={problem.description} components={COMPONENT_RENDERERS} />
-            </Body>
-            <Stack spacing={4}>
-                {problem.testCases.map((testCase, index) => {
-                    return (
-                        <div key={+index}>
-                            <Typography fontSize="0.9rem" fontWeight={600}>
-                                Example {index}:
-                            </Typography>
-                            <Example>
-                                <strong>Input:</strong> {testCase.input}
-                                <br />
-                                <strong>Output:</strong> {testCase.output}
-                                <br />
-                                <strong>Explanation:</strong> {testCase.explanation}
-                            </Example>
-                        </div>
-                    );
-                })}
-                <Constraints>
-                    <Typography fontSize="0.9rem" fontWeight={600} sx={{ mb: 1 }}>
-                        Constraints:
-                    </Typography>
-                    <ConstraintList>
-                        {problem.constraints.map((constraint, index) => (
-                            <li key={+index}>
-                                <ReactMarkdown children={constraint} components={COMPONENT_RENDERERS} />
-                            </li>
+                <Stack spacing={2}>
+                    {typeof problem.description === "string" && (
+                        <ReactMarkdown children={problem.description} components={COMPONENT_RENDERERS} />
+                    )}
+                    {Array.isArray(problem.description) &&
+                        problem.description.map(([title, description]) => (
+                            <Box key={title}>
+                                <Typography variant="h5" fontSize="1rem" fontWeight={600} sx={{ mb: 1 }}>
+                                    {title}
+                                </Typography>
+                                <ReactMarkdown children={description} components={COMPONENT_RENDERERS} />
+                            </Box>
                         ))}
-                    </ConstraintList>
-                </Constraints>
+                </Stack>
+            </Body>
+            <Stack>
+                <Grid container spacing={2}>
+                    {problem.testCases.map(({ input, output }, index) => (
+                        <React.Fragment key={input}>
+                            <Grid item xs={6}>
+                                <Typography variant="h5" fontSize="1rem" fontWeight={600} sx={{ mb: 1 }}>
+                                    예제 입력 {index + 1}
+                                </Typography>
+                                <Example>{input}</Example>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography variant="h5" fontSize="1rem" fontWeight={600} sx={{ mb: 1 }}>
+                                    예제 출력 {index + 1}
+                                </Typography>
+                                <Example>{output}</Example>
+                            </Grid>
+                        </React.Fragment>
+                    ))}
+                </Grid>
             </Stack>
         </Root>
     );

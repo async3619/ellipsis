@@ -3,13 +3,11 @@ export type LanguageType = "javascript" | "typescript" | "python" | "c" | "cpp" 
 export interface TestCase {
     input: string;
     output: string;
-    explanation: string;
 }
 
 export interface Problem {
     title: string;
-    description: string;
+    description: string | [string, string][];
     testCases: TestCase[];
     constraints: string[];
-    initialCode: Partial<Record<LanguageType, string>>;
 }

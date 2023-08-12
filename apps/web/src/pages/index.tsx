@@ -29,7 +29,7 @@ export default function Home() {
     }, []);
 
     const handleClear = React.useCallback(() => {
-        setSourceCode(MOCK_PROBLEM.initialCode.typescript || "");
+        setSourceCode("");
     }, []);
 
     React.useEffect(() => {
