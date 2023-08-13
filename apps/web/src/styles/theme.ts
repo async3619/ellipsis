@@ -32,5 +32,12 @@ export const theme = createTheme({
                 disableRipple: true,
             },
         },
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip: {
+                    fontSize: "0.875rem",
+                },
+            },
+        },
     },
 });
