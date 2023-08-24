@@ -3,14 +3,14 @@ import { nanoid } from "nanoid";
 
 import { ProblemContext, ProblemContextValues } from "@components/Problem/Provider.context";
 
-import { Problem, TestCase } from "@utils/types";
+import { Nullable, Problem, TestCase } from "@utils/types";
 
 export interface ProblemProviderProps {
-    problem: Problem;
+    problem: Nullable<Problem>;
 }
 
 export function ProblemProvider({ problem, children }: React.PropsWithChildren<ProblemProviderProps>) {
-    const [testCases, setTestCases] = React.useState<TestCase[]>(problem.testCases);
+    const [testCases, setTestCases] = React.useState<TestCase[]>([]);
     const addTestCase = React.useCallback(() => {
         setTestCases(testCases => [...testCases, { id: nanoid(), input: "", output: "" }]);
     }, []);
@@ -26,8 +26,8 @@ export function ProblemProvider({ problem, children }: React.PropsWithChildren<P
     }, []);
 
     const resetTestCases = React.useCallback(() => {
-        setTestCases(problem.testCases);
-    }, [problem]);
+        setTestCases([]);
+    }, []);
 
     const contextValue = React.useMemo<ProblemContextValues>(
         () => ({ problem, testCases, setTestCases, addTestCase, deleteTestCase, updateTestCase, resetTestCases }),

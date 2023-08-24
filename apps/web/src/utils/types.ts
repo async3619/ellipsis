@@ -1,4 +1,5 @@
 export type LanguageType = "javascript" | "typescript" | "python" | "c" | "cpp" | "java" | "kotlin" | "rust";
+export type Nullable<T> = T | null | undefined;
 
 export interface TestCase {
     id?: string;
@@ -8,7 +9,5 @@ export interface TestCase {
 
 export interface Problem {
     title: string;
-    description: string | [string, string][];
-    testCases: TestCase[];
-    constraints: string[];
+    content: string;
 }

@@ -12,11 +12,9 @@ import { FillContent } from "@components/FillContent";
 import { EditorToolbar } from "@components/Editor/Toolbar";
 import { EditorProvider } from "@components/Editor/Provider";
 
-import { MOCK_PROBLEM } from "@constants/problems";
-
 import { installRouteMiddleware } from "@utils/routes/middleware";
-import { Problem } from "@utils/types";
 import { ProblemProvider } from "@components/Problem/Provider";
+import { useGetProblemByIdQuery } from "@stores/problem";
 
 const options: React.ComponentProps<typeof Editor>["options"] = {
     wordWrap: "on",
@@ -35,9 +33,13 @@ const options: React.ComponentProps<typeof Editor>["options"] = {
 
 export default function Home() {
     const [sourceCode, setSourceCode] = React.useState("");
-    const [problem] = React.useState<Problem>(MOCK_PROBLEM);
+    const { data } = useGetProblemByIdQuery(1);
 
-    const handleChange = React.useCallback((value: string) => {
+    const handleChange = React.useCallback((value: string | undefined) => {
+        if (!value) {
+            return;
+        }
+
         setSourceCode(value);
     }, []);
 
@@ -57,13 +59,13 @@ export default function Home() {
     }, [handleClear]);
 
     return (
-        <ProblemProvider problem={problem}>
+        <ProblemProvider problem={data}>
             <EditorProvider onLanguageChange={handleLanguageChange}>
                 {({ language }) => (
                     <Box height="100%" p={1}>
                         <PanelLayout>
                             <Panel minSize={40}>
-                                <ProblemView problem={problem} />
+                                <ProblemView problem={data} />
                             </Panel>
                             <PanelHandle />
                             <Panel withoutPaper minSize={40}>

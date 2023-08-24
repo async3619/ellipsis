@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Problem, TestCase } from "@utils/types";
+import { Nullable, Problem, TestCase } from "@utils/types";
 
 export interface ProblemContextValues {
-    problem: Problem;
+    problem: Nullable<Problem>;
     testCases: TestCase[];
     addTestCase(): void;
     deleteTestCase(id: string): void;
