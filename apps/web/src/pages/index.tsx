@@ -13,7 +13,6 @@ import { EditorToolbar } from "@components/Editor/Toolbar";
 import { EditorProvider } from "@components/Editor/Provider";
 
 import { installRouteMiddleware } from "@utils/routes/middleware";
-import { ProblemProvider } from "@components/Problem/Provider";
 import { useGetProblemByIdQuery } from "@stores/problem";
 
 const options: React.ComponentProps<typeof Editor>["options"] = {
@@ -59,34 +58,32 @@ export default function Home() {
     }, [handleClear]);
 
     return (
-        <ProblemProvider problem={data}>
-            <EditorProvider onLanguageChange={handleLanguageChange}>
-                {({ language }) => (
-                    <Box height="100%" p={1}>
-                        <PanelLayout>
-                            <Panel minSize={40}>
-                                <ProblemView problem={data} />
-                            </Panel>
-                            <PanelHandle />
-                            <Panel withoutPaper minSize={40}>
-                                <Box height="100%" display="flex" flexDirection="column">
-                                    <EditorToolbar />
-                                    <FillContent mt={1} mb={1} flex="1 1 auto">
-                                        <Editor
-                                            language={language}
-                                            options={options}
-                                            onChange={handleChange}
-                                            value={sourceCode}
-                                        />
-                                    </FillContent>
-                                    <ProblemToolbar onClear={handleClear} onSubmit={handleSubmit} onTest={handleTest} />
-                                </Box>
-                            </Panel>
-                        </PanelLayout>
-                    </Box>
-                )}
-            </EditorProvider>
-        </ProblemProvider>
+        <EditorProvider onLanguageChange={handleLanguageChange}>
+            {({ language }) => (
+                <Box height="100%" p={1}>
+                    <PanelLayout>
+                        <Panel minSize={40}>
+                            <ProblemView problem={data} />
+                        </Panel>
+                        <PanelHandle />
+                        <Panel withoutPaper minSize={40}>
+                            <Box height="100%" display="flex" flexDirection="column">
+                                <EditorToolbar />
+                                <FillContent mt={1} mb={1} flex="1 1 auto">
+                                    <Editor
+                                        language={language}
+                                        options={options}
+                                        onChange={handleChange}
+                                        value={sourceCode}
+                                    />
+                                </FillContent>
+                                <ProblemToolbar onClear={handleClear} onSubmit={handleSubmit} onTest={handleTest} />
+                            </Box>
+                        </Panel>
+                    </PanelLayout>
+                </Box>
+            )}
+        </EditorProvider>
     );
 }
 
