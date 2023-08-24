@@ -1,7 +1,16 @@
 {
     "extends": "tsconfig/nextjs.json",
     "compilerOptions": {
-        "plugins": [{ "name": "next" }]
+        "plugins": [{ "name": "next" }],
+        "strict": true,
+        "strictNullChecks": true,
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@constants/*": ["./src/constants/*"],
+            "@stores/*": ["./src/stores/*"]
+        }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
